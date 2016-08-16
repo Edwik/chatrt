@@ -44,6 +44,6 @@ io.on('connection',function(socket){
 	});
 });
 
-http.listen(PORT,function(){
+http.listen(3000,function(){
 	console.log('el servidor esta escuchando el puerto %s', PORT);
 });
