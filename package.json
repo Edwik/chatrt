@@ -8,7 +8,7 @@
 		"socket.io":"*",
 	},
 	"devDependencies": {},
-	"script": {
+	"scripts": {
 		"start": "node chat.js"
 	},
 	"engines": {
