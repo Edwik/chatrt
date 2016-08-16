@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Chat RealTime</title>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<style>
+		*{
+			padding: 0px;
+			margin: 0px;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		body{
+			font-family: Verdana;
+		}
+		ul{
+			display: block;
+			list-style-type: none;
+			padding: 20px;
+			background-color: #000;
+			color: #fff;
+		}
+		#controls{
+			position: absolute;
+			bottom: 0px;
+			left: 0px;
+			border-top: 2px #333 solid;
+			display: block;
+			width: 100%;
+		}
+		#controls #msj{
+			display: block;
+			padding: 20px;
+			float: left;
+			width: 85%;
+			font-family: 'Verdana';
+			font-size: 14pt;
+		}
+		#controls #btn{
+			display: block;
+			float: right;
+			padding: 20px;
+		}
+		#controls #channel{
+			display: block;
+			width: 100%;
+			font-size: 14pt;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		var socket = io();
+
+		$(function(){
+			$("form").submit(function(){
+				var mensaje = $("#msj").val();
+				if(mensaje=='') return false;
+				//evento mensaje en el servidor node.js
+				socket.emit('message',mensaje);
+				$("#msj").val('').focus();
+				return false;
+			});
+
+			$("#channel").change(function(){
+				socket.emit('change channel',$("#channel").val());
+			});
+
+		});
+
+		//escuchamos el evento message
+		socket.on('message',function(msg,id){
+			$('#message').append($('<li>').text(id+' : ' +msg));
+		});
+
+		socket.on('change channel',function(channel){
+			//limpiar pantalla
+			$("#message").html('').append($('<li>').text('System : Bienvenido al canal '+channel+'!'));
+		});
+
+	</script>
+	<ul id="message">
+		
+	</ul>
+	<div id="controls">
+		<form action="">
+			<select name="channel" id="channel">
+				<option value="universidad">Universidad</option>
+				<option value="salon">Salon</option>
+			</select>
+			<input type="text" id="msj" placeholder="Escribe tu mensaje..." autocomplete="off">
+			<input type="submit" id="btn" value="enviar">
+		</form>
+	</div>
+</body>
+</html>
