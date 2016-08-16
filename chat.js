@@ -3,7 +3,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var PORT = 3000;
 
-app.get('/',function(req,res){ //express
+app.get('chatrt.herokuapp.com',function(req,res){ //express
 	//request: Son cabeceras y datos que nos enviar el navegador
 	//respnse: Es todo lo que enviamos desde el servidor 
 	
