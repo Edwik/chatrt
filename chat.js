@@ -1,7 +1,8 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var PORT = 3000;
+//var PORT = 3000;
+var PORT = process.env.PORT || 8080;
 
 app.get('/',function(req,res){ //express
 	//request: Son cabeceras y datos que nos enviar el navegador
